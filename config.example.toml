@@ -19,3 +19,9 @@ reasoning_effort = "low"
 # [identity]
 # name = "chemitaro"
 # email = "84865385+chemitaro@users.noreply.github.com"
+
+# メッセージの言語（既定: 日本語）
+# language = "日本語"
+
+# この値（バイト）を超える差分は、全文の代わりにファイル一覧と抜粋を渡します。
+# max_diff_bytes = 250000

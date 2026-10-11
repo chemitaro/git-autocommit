@@ -7,7 +7,51 @@
 - `git add` は行いません。コミット対象は事前にステージしてください。
 - 使用するプロバイダー（Codex / Claude など）、モデル、推論レベルは設定ファイルで第一優先・第二優先の2つを定義します。
 
-> 開発中です。元の実装は `~/workspace/tools/scripts/commit-codex` です。
+## 導入
+
+```bash
+uv tool install -e ~/workspace/tools/git-autocommit   # ~/.local/bin/git-autocommit
+mkdir -p ~/.config/git-autocommit
+cp config.example.toml ~/.config/git-autocommit/config.toml   # 任意（なければ既定値）
+```
+
+前提: `codex login` 済みの Codex CLI と、ログイン済みの Claude Code CLI（使うプロバイダーのみ）。
+
+## 使い方
+
+```bash
+git add <paths>
+git-autocommit             # メッセージ生成 → そのままコミット（git autocommit でも可）
+git-autocommit --confirm   # 生成後に y/N で確認してからコミット
+git-autocommit --dry-run   # メッセージを表示するだけでコミットしない
+```
+
+- 生成したメッセージは stdout、進捗とエラーは stderr に出ます。
+- primary が理由を問わず失敗したら secondary で再試行します。両方失敗したらコミットせず終了コード 1 で終わります。
+- `git commit` はフック有効のまま実行します（`--no-verify` はありません）。
+- 子プロセスには `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` を渡さず、サブスクリプション認証で動かします。
+- ステージ済み差分が `max_diff_bytes`（既定 250000 バイト）を超えると、全文の代わりにファイル一覧・統計・各ファイルの抜粋を渡します。
+
+## 設定
+
+`~/.config/git-autocommit/config.toml`（例: `config.example.toml`）
+
+| キー | 既定値 | 内容 |
+|---|---|---|
+| `[primary]` | `codex` / `gpt-6-luna` / `low` | `provider`（`codex` / `claude`）、`model`、`reasoning_effort` |
+| `[secondary]` | `claude` / `claude-haiku-5-5` / `low` | 同上 |
+| `[identity]` | なし | `name` / `email`。設定時のみ author/committer を検証し、不一致ならコミットを拒否 |
+| `language` | `日本語` | 件名・本文の言語 |
+| `max_diff_bytes` | `250000` | 差分全文を渡す上限 |
+
+## 終了コード
+
+| コード | 意味 |
+|---|---|
+| 0 | コミット成功、`--dry-run` 成功、または `--confirm` で中止 |
+| 1 | Git リポジトリ外、ステージなし、身元不一致、生成失敗、TTY なしで `--confirm` |
+| 2 | 設定ファイルまたは引数が不正 |
+| その他 | `git commit` の終了コード（フック失敗など） |
 
 ## 構成
 
