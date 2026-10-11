@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Local
+.workbench/
+.env
+.DS_Store
