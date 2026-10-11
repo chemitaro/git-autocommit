@@ -1,0 +1,15 @@
+# git-autocommit 設定ファイルの例（案）
+# 配置先（案）: ~/.config/git-autocommit/config.toml
+#
+# primary が失敗したとき（モデル利用不可・利用量制限など）だけ secondary で再試行します。
+# provider: "codex" | "claude"
+
+[primary]
+provider = "codex"
+model = "gpt-5.3-codex-spark"
+reasoning_effort = "low"
+
+[secondary]
+provider = "codex"
+model = "gpt-5.6-luna"
+reasoning_effort = "low"
