@@ -17,8 +17,8 @@ reasoning_effort = "low"
 
 # 設定した場合だけ、Git の author/committer がこの値と一致するか確認します。
 # [identity]
-# name = "chemitaro"
-# email = "84865385+chemitaro@users.noreply.github.com"
+# name = "Your Name"
+# email = "you@example.com"
 
 # メッセージの言語（既定: 日本語）
 # language = "日本語"

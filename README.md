@@ -10,7 +10,9 @@
 ## 導入
 
 ```bash
-uv tool install -e ~/workspace/tools/git-autocommit   # ~/.local/bin/git-autocommit
+git clone https://github.com/chemitaro/git-autocommit.git
+cd git-autocommit
+uv tool install -e .     # ~/.local/bin/git-autocommit
 mkdir -p ~/.config/git-autocommit
 cp config.example.toml ~/.config/git-autocommit/config.toml   # 任意（なければ既定値）
 ```
@@ -75,3 +77,7 @@ uv run ruff format .     # 整形
 uv run mypy              # 型チェック
 uv run git-autocommit    # ローカル実行
 ```
+
+## ライセンス
+
+[The Unlicense](LICENSE)（パブリックドメイン）
