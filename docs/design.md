@@ -48,3 +48,5 @@ Conventional Commits。type は英語、件名と箇条書きの本文は `langu
 
 - `uv tool install -e .` で `~/.local/bin/git-autocommit` に導入する。
 - 動作確認後、スキル `git-commit` を `git-autocommit` 前提に書き換え、`/usr/local/bin/commit-codex` のリンクを外す。
+
+2026-10-11 に移行済み: スキル `git-commit`（`~/.agents`）と Codex の実行許可ルール（`~/.codex/rules/user.rules`）を `git-autocommit` に切り替え、`commit-codex` のリンクを削除した。スクリプト本体 `~/workspace/tools/scripts/commit-codex` は残している。
