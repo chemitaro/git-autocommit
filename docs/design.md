@@ -34,6 +34,7 @@
 - codex: `codex exec --model <m> --config model_reasoning_effort="<e>" --sandbox read-only -`
 - claude: `claude -p --model <m> --effort <e>`（ツールは使わせない）
 - 子プロセスには `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` を渡さず、サブスクリプション認証で動かす。
+- 両 CLI のユーザーフックは呼び出しごとに無効化する（codex: `--config features.hooks=false`、claude: `--settings '{"disableAllHooks": true}'`）。通知音・Telegram 通知・Orca 連携が1回ごとに動き、所要時間がほぼ倍になっていたため（2026-10-11 実測）。
 - primary が失敗したら（異常終了・未ログイン・タイムアウト・空出力など理由を問わず）secondary で再試行する。
 
 ## メッセージ形式
