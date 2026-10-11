@@ -30,6 +30,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.confirm and not sys.stdin.isatty():
+        _log("No TTY available for confirmation. Aborting without committing.")
+        return 1
     try:
         config = load_config(default_config_path())
     except ConfigError as exc:
@@ -58,9 +61,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.dry_run:
         return 0
     if args.confirm:
-        if not sys.stdin.isatty():
-            _log("No TTY available for confirmation. Aborting without committing.")
-            return 1
         print("Commit with the above message? [y/N]: ", end="", file=sys.stderr, flush=True)
         if sys.stdin.readline().strip().lower() not in ("y", "yes"):
             _log("Aborted. No commit created.")

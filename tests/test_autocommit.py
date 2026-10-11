@@ -108,6 +108,7 @@ def test_confirm_without_tty_aborts(env: Env) -> None:
 
     assert main(["--confirm"]) == 1
     assert env.commit_count() == 0
+    assert not env.called("codex")
 
 
 def test_no_staged_changes_exits_without_calling_providers(env: Env, capsys: pytest.CaptureFixture[str]) -> None:
