@@ -1,15 +1,21 @@
-# git-autocommit 設定ファイルの例（案）
-# 配置先（案）: ~/.config/git-autocommit/config.toml
+# git-autocommit 設定ファイルの例
+# 配置先: ~/.config/git-autocommit/config.toml
 #
-# primary が失敗したとき（モデル利用不可・利用量制限など）だけ secondary で再試行します。
-# provider: "codex" | "claude"
+# primary が失敗したときだけ secondary で再試行します。
+# provider: "codex"（codex exec）| "claude"（claude -p）
+# reasoning_effort: 各 CLI が受け付ける値（どちらも low が最小）
 
 [primary]
 provider = "codex"
-model = "gpt-5.3-codex-spark"
+model = "gpt-6-luna"
 reasoning_effort = "low"
 
 [secondary]
-provider = "codex"
-model = "gpt-5.6-luna"
+provider = "claude"
+model = "claude-haiku-5-5"
 reasoning_effort = "low"
+
+# 設定した場合だけ、Git の author/committer がこの値と一致するか確認します。
+# [identity]
+# name = "chemitaro"
+# email = "84865385+chemitaro@users.noreply.github.com"

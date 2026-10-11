@@ -15,6 +15,7 @@
 git-autocommit/
 ├── pyproject.toml        # パッケージ定義・ruff / mypy / pytest 設定
 ├── config.example.toml   # 設定ファイルの例
+├── docs/design.md        # 合意済みの設計メモ
 ├── src/git_autocommit/   # 実装コード
 └── tests/                # テストコード
 ```
