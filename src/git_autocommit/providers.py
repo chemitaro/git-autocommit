@@ -28,6 +28,9 @@ def build_command(spec: ModelSpec) -> list[str]:
             f'model_reasoning_effort="{spec.reasoning_effort}"',
             "--config",
             "notify=[]",
+            # Skip user hooks (notification sounds, Telegram, Orca); they add ~4s and side effects per call.
+            "--config",
+            "features.hooks=false",
             "--sandbox",
             "read-only",
             "--skip-git-repo-check",
@@ -49,6 +52,9 @@ def build_command(spec: ModelSpec) -> list[str]:
             "--no-session-persistence",
             "--disable-slash-commands",
             "--strict-mcp-config",
+            # Skip user hooks (notification sounds, Telegram, Orca); they roughly double the call time.
+            "--settings",
+            '{"disableAllHooks": true}',
         ]
     raise ProviderError(f"unknown provider: {spec.provider}")
 

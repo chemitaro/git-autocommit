@@ -1,4 +1,5 @@
 import io
+import json
 
 import pytest
 
@@ -66,9 +67,12 @@ reasoning_effort = "high"
     codex_args = env.args("codex")
     assert codex_args[:3] == ["exec", "--model", "gpt-test"]
     assert 'model_reasoning_effort="medium"' in codex_args
+    assert "features.hooks=false" in codex_args
     assert codex_args[codex_args.index("--sandbox") : codex_args.index("--sandbox") + 2] == ["--sandbox", "read-only"]
     claude_args = env.args("claude")
     assert claude_args[:5] == ["-p", "--model", "claude-test", "--effort", "high"]
+    settings = claude_args[claude_args.index("--settings") + 1]
+    assert json.loads(settings) == {"disableAllHooks": True}
     for provider in ("codex", "claude"):
         child_env = env.child_env(provider)
         assert "ANTHROPIC_API_KEY" not in child_env

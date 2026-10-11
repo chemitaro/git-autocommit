@@ -30,6 +30,7 @@ git-autocommit --dry-run   # メッセージを表示するだけでコミット
 - primary が理由を問わず失敗したら secondary で再試行します。両方失敗したらコミットせず終了コード 1 で終わります。
 - `git commit` はフック有効のまま実行します（`--no-verify` はありません）。
 - 子プロセスには `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` を渡さず、サブスクリプション認証で動かします。
+- Codex / Claude Code のユーザーフック（通知音、Telegram 通知、Orca 連携など）は呼び出しごとに無効化します（`-c features.hooks=false` / `--settings '{"disableAllHooks": true}'`）。設定ファイルは書き換えないため、通常の対話利用には影響しません。生成はツールを使わないテキスト出力のみで、Codex は読み取り専用サンドボックスでも制限されるため、安全チェック用のフックは不要と判断しています。Git のフック（pre-commit など）は無効化しません。
 - ステージ済み差分が `max_diff_bytes`（既定 250000 バイト）を超えると、全文の代わりにファイル一覧・統計・各ファイルの抜粋を渡します。
 
 ## 設定
